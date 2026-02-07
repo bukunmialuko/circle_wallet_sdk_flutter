@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_sign_in: ^7.2.0
+  dio: ^5.9.1
   circle_wallet:
     # When depending on this package from a real application you should use:
     #   circle_wallet: ^x.y.z

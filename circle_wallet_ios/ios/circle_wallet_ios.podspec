@@ -4,17 +4,25 @@
 Pod::Spec.new do |s|
   s.name             = 'circle_wallet_ios'
   s.version          = '0.0.1'
-  s.summary          = 'An iOS implementation of the circle_wallet plugin.'
-  s.description      = <<-DESC
-  An iOS implementation of the circle_wallet plugin.
-                       DESC
+  s.summary          = 'iOS implementation of the circle_wallet plugin.'
+  s.description      = 'iOS implementation of the circle_wallet plugin.'
   s.homepage         = 'http://example.com'
-  s.license          = { :type => 'BSD', :file => '../LICENSE' }
-  s.author           = { 'Com Example Verygoodcore' => 'email@example.com' }
-  s.source           = { :path => '.' }  
-  s.source_files = 'circle_wallet_ios/Sources/**/*.swift'
+  s.license          = { :type => 'BSD', :file => 'LICENSE' }
+  s.author           = { 'OBKM' => 'email@example.com' }
+  s.source           = { :path => '.' }
+
+  s.platform         = :ios, '11.0'
+  s.static_framework = true
+
   s.dependency 'Flutter'
-  s.platform = :ios, '13.0'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.dependency 'CircleProgrammableWalletSDK_static', '1.1.9'
+
+  s.source_files = 'Classes/**/*.{swift,h,m}'
+
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES'
+  }
+
   s.swift_version = '6.1'
 end
+

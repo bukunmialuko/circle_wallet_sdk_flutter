@@ -47,3 +47,4 @@ build/
 .classpath
 .settings
 /circle_wallet_android/android/gradle/wrapper/gradle-wrapper.properties
+/circle_wallet/example/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
