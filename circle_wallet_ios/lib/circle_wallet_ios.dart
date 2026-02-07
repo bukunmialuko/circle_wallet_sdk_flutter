@@ -17,4 +17,15 @@ class CircleWalletIOS extends CircleWalletPlatform {
   Future<String?> getPlatformName() {
     return methodChannel.invokeMethod<String>('getPlatformName');
   }
+
+  @override
+  Future<Map<dynamic, dynamic>> execute({
+    required String appId,
+    required String userToken,
+    required String encryptionKey,
+    required String challengeId,
+  }) {
+    // TODO: implement execute
+    throw UnimplementedError();
+  }
 }

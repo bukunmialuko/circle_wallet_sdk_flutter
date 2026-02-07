@@ -6,6 +6,17 @@ class CircleWalletMock extends CircleWalletPlatform {
 
   @override
   Future<String?> getPlatformName() async => mockPlatformName;
+
+  @override
+  Future<Map<dynamic, dynamic>> execute({
+    required String appId,
+    required String userToken,
+    required String encryptionKey,
+    required String challengeId,
+  }) {
+    // TODO: implement execute
+    throw UnimplementedError();
+  }
 }
 
 void main() {
