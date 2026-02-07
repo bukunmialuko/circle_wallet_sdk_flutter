@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import CircleProgrammableWalletSDK
 
 public class CircleWalletPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
