@@ -1,0 +1,32 @@
+name: circle_wallet
+description: My new Flutter plugin
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.10.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: circle_wallet_android
+      ios:
+        default_package: circle_wallet_ios
+
+dependencies:
+  flutter:
+    sdk: flutter
+  circle_wallet_android:
+    path: ../circle_wallet_android
+  circle_wallet_ios:
+    path: ../circle_wallet_ios
+  circle_wallet_platform_interface:
+    path: ../circle_wallet_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  plugin_platform_interface: ^2.1.8
+  very_good_analysis: ^10.1.0

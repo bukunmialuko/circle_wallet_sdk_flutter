@@ -1,0 +1,28 @@
+name: circle_wallet_android
+description: Android implementation of the circle_wallet plugin
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.10.0
+
+flutter:
+  plugin:
+    implements: circle_wallet
+    platforms:
+      android:
+        package: com.example.verygoodcore
+        pluginClass: CircleWalletPlugin
+        dartPluginClass: CircleWalletAndroid
+
+dependencies:
+  flutter:
+    sdk: flutter
+  circle_wallet_platform_interface:
+    path: ../circle_wallet_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  plugin_platform_interface: ^2.1.8
+  very_good_analysis: ^10.1.0
