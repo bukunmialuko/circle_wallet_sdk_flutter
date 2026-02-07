@@ -10,25 +10,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        // Circle Programmable Wallet SDK repository
-        def localPropertiesFile = new File(rootProject.projectDir, "../../../android/local.properties")
-
-        if (localPropertiesFile.exists()) {
-            Properties properties = new Properties()
-            properties.load(localPropertiesFile.newDataInputStream())
-
-            def mavenUrl = properties.getProperty('pwsdk.maven.url')
-
-            if (mavenUrl != null && !mavenUrl.isEmpty()) {
-                maven {
-                    url mavenUrl
-                    credentials {
-                        username properties.getProperty('pwsdk.maven.username') ?: ""
-                        password properties.getProperty('pwsdk.maven.password') ?: ""
-                    }
-                }
-            }
-        }
     }
 }
 
