@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author           = { 'OBKM' => 'email@example.com' }
   s.source           = { :path => '.' }
 
-  s.platform         = :ios, '16.0'
+  s.platform         = :ios, '11.0'
   s.static_framework = true
 
   s.dependency 'Flutter'

@@ -47,7 +47,17 @@ extension WalletSdkAdapter: WalletSdkLayoutProvider {
 
     func securityQuestionsRequiredCount() -> Int { 2 }
 
-    func securityConfirmItems() -> [SecurityConfirmItem] { [] }
+    func securityConfirmItems() -> [SecurityConfirmItem] { [
+        SecurityConfirmItem(image: UIImage(named: "img_item_1"),
+            text: "This is the only way to recover my account access."),
+        SecurityConfirmItem(image: UIImage(named: "img_item_2"),
+            text: "Circle won’t store my answers so it’s my responsibility to remember them."),
+        SecurityConfirmItem(image: UIImage(named: "img_item_3"),
+            text: "I will lose access to my wallet and my digital assets if I forget my answers."),
+        ]
+    }
+
+    func themeFont() -> ThemeConfig.ThemeFont? { return nil }
 
     func imageStore() -> ImageStore {
         ImageStore(local: [:], remote: [:])
