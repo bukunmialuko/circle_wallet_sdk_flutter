@@ -24,8 +24,25 @@ class CircleWalletIOS extends CircleWalletPlatform {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
-  }) {
-    // TODO: implement execute
-    throw UnimplementedError();
+  }) async {
+    try {
+      final args = <String, dynamic>{
+        'appId': appId,
+        'userToken': userToken,
+        'encryptionKey': encryptionKey,
+        'challengeId': challengeId,
+      };
+
+      final result = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
+        'execute',
+        args,
+      );
+
+      return result ?? <dynamic, dynamic>{};
+    } on PlatformException catch (e) {
+      throw Exception(
+        'CircleWalletAndroid execute failed: ${e.code} → ${e.message}',
+      );
+    }
   }
 }
