@@ -10,7 +10,41 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+
+        def pwLocalPropertiesFile = new File(rootDir, "local.properties")
+
+        if (pwLocalPropertiesFile.exists()) {
+            Properties properties = new Properties()
+            properties.load(pwLocalPropertiesFile.newDataInputStream())
+
+            def mavenUrl = properties.getProperty('pwsdk.maven.url')
+            def mavenUsername = properties.getProperty('pwsdk.maven.username')
+            def mavenPassword = properties.getProperty('pwsdk.maven.password')
+
+            if (mavenUrl != null && !mavenUrl.isEmpty()) {
+                maven {
+                    url mavenUrl
+                    credentials {
+                        username mavenUsername ?: ""
+                        password mavenPassword ?: ""
+                    }
+                }
+            }
+        }
     }
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 android {
@@ -52,6 +86,8 @@ android {
 }
 
 dependencies {
+    compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
+
     implementation "circle.programmablewallet:sdk:1.0.1189"
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
