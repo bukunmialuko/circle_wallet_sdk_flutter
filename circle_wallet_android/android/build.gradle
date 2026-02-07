@@ -38,11 +38,6 @@ android {
         minSdkVersion 19
     }
 
-    dependencies {
-        testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.0.0'
-    }
-
     testOptions {
         unitTests.all {
             useJUnitPlatform()
@@ -54,4 +49,11 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    implementation "circle.programmablewallet:sdk:1.0.1189"
+
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.mockito:mockito-core:5.0.0'
 }
