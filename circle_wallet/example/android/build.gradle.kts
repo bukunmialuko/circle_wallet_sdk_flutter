@@ -2,6 +2,22 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+
+        // Circle Programmable Wallet SDK repository
+        val properties = java.util.Properties().apply {
+            load(File(rootProject.projectDir, "local.properties").inputStream())
+        }
+
+        val mavenUrl = properties.getProperty("pwsdk.maven.url")
+            ?: error("pwsdk.maven.url not found in local.properties")
+
+        maven {
+            url = uri(mavenUrl)
+            credentials {
+                username = properties.getProperty("pwsdk.maven.username").orEmpty()
+                password = properties.getProperty("pwsdk.maven.password").orEmpty()
+            }
+        }
     }
 }
 

@@ -33,4 +33,12 @@ abstract class CircleWalletPlatform extends PlatformInterface {
 
   /// Return the current platform name.
   Future<String?> getPlatformName();
+
+  /// Return the result of challenge execution.
+  Future<Map<dynamic, dynamic>> execute({
+    required String appId,
+    required String userToken,
+    required String encryptionKey,
+    required String challengeId,
+  });
 }
