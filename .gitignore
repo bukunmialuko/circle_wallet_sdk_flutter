@@ -166,6 +166,9 @@ lib/l10n/gen/
 *.env
 *.envv
 
+# Keep the Android template .env file in the repo (it contains placeholders only).
+!/circle_wallet/example/.env
+
 devtools_options.yaml
 
 /lib/generated/
@@ -198,3 +201,4 @@ devtools_options.yaml
 /apps/superapp/ios/Runner.xcodeproj/xcshareddata/xcschemes/staging.xcscheme.backup
 /apps/superapp/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
 /apps/superapp/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/circle_wallet/example/.env

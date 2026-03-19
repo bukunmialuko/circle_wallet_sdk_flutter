@@ -11,24 +11,11 @@ allprojects {
         google()
         mavenCentral()
 
-        def pwLocalPropertiesFile = new File(rootDir, "local.properties")
-
-        if (pwLocalPropertiesFile.exists()) {
-            Properties properties = new Properties()
-            properties.load(pwLocalPropertiesFile.newDataInputStream())
-
-            def mavenUrl = properties.getProperty('pwsdk.maven.url')
-            def mavenUsername = properties.getProperty('pwsdk.maven.username')
-            def mavenPassword = properties.getProperty('pwsdk.maven.password')
-
-            if (mavenUrl != null && !mavenUrl.isEmpty()) {
-                maven {
-                    url mavenUrl
-                    credentials {
-                        username mavenUsername ?: ""
-                        password mavenPassword ?: ""
-                    }
-                }
+        maven {
+            url System.getenv('PWSDK_MAVEN_URL')
+            credentials {
+                username System.getenv('PWSDK_MAVEN_USERNAME')
+                password System.getenv('PWSDK_MAVEN_PASSWORD')
             }
         }
     }

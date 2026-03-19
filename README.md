@@ -31,6 +31,18 @@ If you prefer, you can also run the older root-level script:
 bash ./bootstrap.sh
 ```
 
+### Android Maven credentials (.env)
+Android builds require these environment variables used by Gradle via `System.getenv`:
+
+`PWSDK_MAVEN_URL`
+`PWSDK_MAVEN_USERNAME`
+`PWSDK_MAVEN_PASSWORD`
+
+The repository includes a template at `circle_wallet/example/.env`. Before running Android builds, export the variables from that file (zsh example):
+```sh
+set -a; source circle_wallet/example/.env; set +a
+```
+
 ### Integration tests 🧪
 
 Very Good Flutter Plugin uses [fluttium][fluttium_link] for integration tests. Those tests are located 
