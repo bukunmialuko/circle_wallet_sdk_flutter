@@ -11,11 +11,11 @@ Pod::Spec.new do |s|
   s.author           = { 'OBKM' => 'email@example.com' }
   s.source           = { :path => '.' }
 
-  s.platform         = :ios, '11.0'
+  s.platform         = :ios, '15.1'
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency 'CircleProgrammableWalletSDK_static', '1.1.9'
+  s.dependency 'CircleProgrammableWalletSDK_static', '1.4.0'
 
   s.source_files = 'Classes/**/*.{swift,h,m}'
 
