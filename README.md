@@ -43,6 +43,11 @@ The repository includes a template at `circle_wallet/example/.env`. Before runni
 set -a; source circle_wallet/example/.env; set +a
 ```
 
+You can also run the app using the helper script:
+```sh
+bash ./scripts/run_android_example_with_env.sh --debug
+```
+
 ### Integration tests 🧪
 
 Very Good Flutter Plugin uses [fluttium][fluttium_link] for integration tests. Those tests are located 
