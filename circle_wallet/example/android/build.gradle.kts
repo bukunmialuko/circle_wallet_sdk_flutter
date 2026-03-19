@@ -4,18 +4,13 @@ allprojects {
         mavenCentral()
 
         // Circle Programmable Wallet SDK repository
-        val properties = java.util.Properties().apply {
-            load(File(rootProject.projectDir, "local.properties").inputStream())
-        }
-
-        val mavenUrl = properties.getProperty("pwsdk.maven.url")
-            ?: error("pwsdk.maven.url not found in local.properties")
-
+        val mavenUrl = System.getenv("PWSDK_MAVEN_URL")
+            ?: error("PWSDK_MAVEN_URL env var is not set. Create ${rootProject.projectDir}/../.env and export it (or set the env vars before running Gradle).")
         maven {
             url = uri(mavenUrl)
             credentials {
-                username = properties.getProperty("pwsdk.maven.username").orEmpty()
-                password = properties.getProperty("pwsdk.maven.password").orEmpty()
+                username = System.getenv("PWSDK_MAVEN_USERNAME").orEmpty()
+                password = System.getenv("PWSDK_MAVEN_PASSWORD").orEmpty()
             }
         }
     }

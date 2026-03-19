@@ -48,3 +48,157 @@ build/
 .settings
 /circle_wallet_android/android/gradle/wrapper/gradle-wrapper.properties
 /circle_wallet/example/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.ipr
+*.iws
+.idea/*
+
+# Visual Studio Code related
+.settings/
+.vscode/*
+
+# packages file containing multi-root paths
+.packages.generated
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.pub-cache/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+.fvm/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+**/android/.idea/
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+*.jks
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+
+# Submodules
+packages/**/pubspec.lock
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Exceptions to the above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+!/dev/ci/**/Gemfile.lock
+!.vscode/extensions.json
+!.vscode/launch.json
+!.idea/codeStyles/
+!.idea/dictionaries/
+!.idea/runConfigurations/
+
+# Generated l10n files
+lib/l10n/gen/
+
+
+# OBKM Custom
+*google-services.json
+*GoogleService-Info.plist
+
+
+.fvm/flutter_sdk
+
+*.freezed.dart
+*.g.dart
+*.env
+*.envv
+
+# Keep the Android template .env file in the repo (it contains placeholders only).
+!/circle_wallet/example/.env
+
+devtools_options.yaml
+
+/lib/generated/
+/lib/gen/
+
+**/*.freezed.dart
+**/*.g.dart
+**/*.mocks.dart
+/android/play_store_json_key.json
+
+/ios/fastlane/app-store-connect-api-key.json
+/android/service-account.json
+
+
+# Ignore everything in runConfigurations
+.idea/runConfigurations/*
+
+# Except these specific files
+!.idea/runConfigurations/run_development.xml
+!.idea/runConfigurations/run_production.xml
+!.idea/runConfigurations/run_staging.xml
+!.idea/runConfigurations/melos_bootstrap.xml
+!.idea/runConfigurations/melos_clean.xml
+!.idea/runConfigurations/melos_flutter_run_web_app.xml
+!.idea/runConfigurations/melos_run_generate.xml
+/macos/Flutter/
+/windows/flutter/ephemeral/.plugin_symlinks/
+/macos/
+/apps/superapp/android/.kotlin/sessions/kotlin-compiler-16030351174034053840.salive
+/apps/superapp/ios/Runner.xcodeproj/xcshareddata/xcschemes/staging.xcscheme.backup
+/apps/superapp/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/apps/superapp/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/circle_wallet/example/.env
