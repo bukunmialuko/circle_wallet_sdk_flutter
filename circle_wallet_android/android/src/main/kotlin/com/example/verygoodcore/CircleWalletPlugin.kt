@@ -90,6 +90,27 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 )
             )
         )
+
+        try {
+            WalletSdk.setSecurityConfirmItems(
+                arrayOf(
+                    circle.programmablewallet.sdk.presentation.SecurityConfirmItem(
+                        null,
+                        "This is the only way to recover my account access."
+                    ),
+                    circle.programmablewallet.sdk.presentation.SecurityConfirmItem(
+                        null,
+                        "Ribh won’t store my answers so it’s my responsibility to remember them."
+                    ),
+                    circle.programmablewallet.sdk.presentation.SecurityConfirmItem(
+                        null,
+                        "I will lose access to my wallet and my digital assets if I forget my answers."
+                    )
+                )
+            )
+        } catch (e: Exception) {
+            // ignore if not supported
+        }
     }
 
     private val DEFAULT_ENDPOINT = "https://enduser-sdk.circle.com/v1/w3s/"
@@ -147,7 +168,8 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             // 1) INIT
             val settings = SettingsManagement().apply {
                 isEnableBiometricsPin = enableBiometricsPin
-                // disableConfirmationUI = ...
+                // Force numeric-only keyboard on the PIN entry screen
+                pinCodeInputType = SettingsManagement.PinCodeInputType.numericPad
             }
 
             WalletSdk.init(

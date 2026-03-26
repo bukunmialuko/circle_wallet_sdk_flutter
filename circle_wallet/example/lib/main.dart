@@ -140,7 +140,9 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color(0xFFFF6584),
           content: Text('$error'),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       );
     } finally {
@@ -184,8 +186,11 @@ class _HomePageState extends State<HomePage> {
             ),
             borderRadius: BorderRadius.circular(14),
           ),
-          child: const Icon(Icons.account_balance_wallet_rounded,
-              color: Colors.white, size: 28),
+          child: const Icon(
+            Icons.account_balance_wallet_rounded,
+            color: Colors.white,
+            size: 28,
+          ),
         ),
         const SizedBox(height: 20),
         const Text(
@@ -217,15 +222,15 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.info_outline_rounded,
                   color: Color(0xFF6C63FF),
                   size: 20,
                 ),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'Platform Info',
                   style: TextStyle(
                     color: Color(0xFF9090A8),
@@ -267,8 +272,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : const Icon(Icons.refresh_rounded, size: 20),
-                label:
-                    Text(_isLoading ? 'Fetching...' : 'Get Platform Name'),
+                label: Text(_isLoading ? 'Fetching...' : 'Get Platform Name'),
               ),
             ),
           ],
@@ -354,7 +358,9 @@ class _ExecutePageState extends State<ExecutePage> {
           backgroundColor: const Color(0xFFFF6584),
           content: Text('$error'),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       );
     } finally {
@@ -447,7 +453,9 @@ class _ExecutePageState extends State<ExecutePage> {
             ),
             const SizedBox(height: 24),
             const _SectionLabel(
-                icon: Icons.lock_person_rounded, label: 'Authentication'),
+              icon: Icons.lock_person_rounded,
+              label: 'Authentication',
+            ),
             const SizedBox(height: 12),
             _FormField(
               controller: _userTokenController,
@@ -466,7 +474,9 @@ class _ExecutePageState extends State<ExecutePage> {
             ),
             const SizedBox(height: 24),
             const _SectionLabel(
-                icon: Icons.task_alt_rounded, label: 'Challenge'),
+              icon: Icons.task_alt_rounded,
+              label: 'Challenge',
+            ),
             const SizedBox(height: 12),
             _FormField(
               controller: _challengeIdController,
@@ -522,7 +532,7 @@ class _ExecutePageState extends State<ExecutePage> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: Color(0xFF3CBA8B), width: 1),
+        side: const BorderSide(color: Color(0xFF3CBA8B)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -531,8 +541,11 @@ class _ExecutePageState extends State<ExecutePage> {
           children: [
             const Row(
               children: [
-                Icon(Icons.check_circle_rounded,
-                    color: Color(0xFF3CBA8B), size: 20),
+                Icon(
+                  Icons.check_circle_rounded,
+                  color: Color(0xFF3CBA8B),
+                  size: 20,
+                ),
                 SizedBox(width: 8),
                 Text(
                   'Result',
