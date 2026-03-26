@@ -76,6 +76,8 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         WalletSdk.setCustomUserAgent("FLUTTER-CIRCLE-WALLET")
 
+        WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider())
+
         WalletSdk.setSecurityQuestions(
             arrayOf(
                 SecurityQuestion("What is your father’s middle name?"),
