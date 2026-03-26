@@ -42,3 +42,10 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Circle PW SDK activities/themes extend AppCompat/Material; keep explicit so the example
+    // app links resources even when Gradle does not surface full transitive POM metadata.
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+}

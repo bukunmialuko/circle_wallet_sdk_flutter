@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Overrides Circle Programmable Wallet SDK colors (resource merge). Dark UI aligned with product mocks: #000000 screen, #1C1C1E surfaces, white primary text, #8E8E93 secondary, solid white primary CTA + black label. -->
+<resources>
+    <color name="circlepw_background">#FF000000</color>
+    <color name="circlepw_interactive_bg">#FF1C1C1E</color>
+    <color name="circlepw_security_confirm_main_bg">#FF1C1C1E</color>
+    <color name="circlepw_divider">#FF38383A</color>
+
+    <color name="circlepw_text_main">#FFFFFFFF</color>
+    <color name="circlepw_text_main2">#FFFFFFFF</color>
+    <color name="circlepw_text_prompt">#FFFFFFFF</color>
+    <color name="circlepw_text_auxiliary">#FF8E8E93</color>
+    <color name="circlepw_text_auxiliary2">#FF8E8E93</color>
+    <color name="circlepw_text_exchange">#FF8E8E93</color>
+    <color name="circlepw_placeholder">#FF8E8E93</color>
+    <color name="circlepw_text_interactive">#FFFFFFFF</color>
+    <color name="circlepw_text_action">#FFFFFFFF</color>
+    <color name="circlepw_text_action_pressed">#B3FFFFFF</color>
+    <color name="circlepw_text_summary">#FFFFFFFF</color>
+    <color name="circlepw_text_sign_url">#FF8E8E93</color>
+
+    <color name="circlepw_main_bt_background">#FFFFFFFF</color>
+    <color name="circlepw_main_bt_background_pressed">#FFE0E0E0</color>
+    <color name="circlepw_main_bt_text">#FF000000</color>
+    <color name="circlepw_main_bt_text_pressed">#FF000000</color>
+    <color name="circlepw_disabled_main_bt_background">#803A3A3C</color>
+    <color name="circlepw_disabled_main_bt_text">#80FFFFFF</color>
+
+    <color name="circlepw_plain_bt_background">#00000000</color>
+    <color name="circlepw_plain_bt_background_pressed">#33FFFFFF</color>
+    <color name="circlepw_plain_bt_background_disabled">#40000000</color>
+    <color name="circlepw_plain_bt_text">#FFFFFFFF</color>
+    <color name="circlepw_plain_bt_text_disabled">#808E8E93</color>
+
+    <color name="circlepw_second_bt_background">#00000000</color>
+    <color name="circlepw_second_bt_background_pressed">#33FFFFFF</color>
+    <color name="circlepw_second_bt_background_disabled">#40000000</color>
+    <color name="circlepw_second_bt_border">#FFFFFFFF</color>
+    <color name="circlepw_second_bt_border_disabled">#668E8E93</color>
+    <color name="circlepw_second_bt_text">#FFFFFFFF</color>
+    <color name="circlepw_second_bt_text_disabled">#668E8E93</color>
+
+    <color name="circlepw_input_boarder">#FF48484A</color>
+    <color name="circlepw_input_boarder_focused">#FFFFFFFF</color>
+    <color name="circlepw_input_boarder_focused_shadow">#00FFFFFF</color>
+    <color name="circlepw_disabled_input_background">#FF2C2C2E</color>
+
+    <color name="circlepw_pin_dot_activated">#FFFF6B6B</color>
+    <color name="circlepw_pin_dot_base">#FF3A3A3C</color>
+    <color name="circlepw_pin_dot_base_boarder">#FF48484A</color>
+    <color name="circlepw_pin_dot_focused_boarder">#FFFF8E8E</color>
+
+    <color name="circlepw_error">#FFFF453A</color>
+    <color name="circlepw_error_background">#FF2C1F1F</color>
+
+    <color name="circlepw_alert_pop_window_background">#E6000000</color>
+    <color name="circlepw_alert_pop_title_text">#FFFFFFFF</color>
+    <color name="circlepw_alert_pop_description_text">#FF8E8E93</color>
+    <color name="circlepw_alert_pop_btn_text">#FF000000</color>
+
+    <color name="circlepw_otp_head_text">#FFFFFFFF</color>
+    <color name="circlepw_otp_hint_text">#FF8E8E93</color>
+    <color name="circlepw_otp_action_text">#FFFFFFFF</color>
+
+    <color name="circlepw_swipe_bt_main_background">#FFFFFFFF</color>
+    <color name="circlepw_swipe_bt_text">#FF000000</color>
+    <color name="circlepw_swpie_bt_secondary_background">#FF1C1C1E</color>
+    <color name="circlepw_swpie_bt_confirming_progress_end">#33FFFFFF</color>
+
+    <color name="circlepw_tag_background">#FF2C2C2E</color>
+    <color name="circlepw_tag_text">#FFFFFFFF</color>
+    <color name="circlepw_tag_following_text">#FF8E8E93</color>
+
+    <color name="circlepw_ripple_material_light">#30FFFFFF</color>
+    <color name="circlepw_tip_text">#FFFFFFFF</color>
+    <color name="circlepw_transaction_request_fee_tip_bg">#FF2C2C2E</color>
+    <color name="circlepw_success">#FF32D74B</color>
+</resources>

@@ -7,7 +7,13 @@ import circle.programmablewallet.sdk.presentation.RemoteImageSetter
 import circle.programmablewallet.sdk.presentation.Resource
 import circle.programmablewallet.sdk.presentation.TextConfig
 
-/** Security confirmation copy aligned with iOS WalletSdkAdapter.securityConfirmItems(). */
+/**
+ * Security confirmation copy aligned with iOS `WalletSdkAdapter.securityConfirmItems()`.
+ *
+ * Global PW SDK chrome (backgrounds, typography, buttons) is themed via Android resource merge:
+ * override `circlepw_*` colors and `circlepw_dark_status_bar` in the host app under
+ * `android/app/src/main/res/values/` (see example `circle_pw_theme_colors.xml`).
+ */
 class FlutterWalletLayoutProvider : LayoutProvider() {
 
     private val remotePlaceholderUrls = arrayOf(
