@@ -149,8 +149,6 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             // 1) INIT
             val settings = SettingsManagement().apply {
                 isEnableBiometricsPin = enableBiometricsPin
-                // Force numeric-only keyboard on the PIN entry screen
-                pinCodeInputType = SettingsManagement.PinCodeInputType.numericPad
             }
 
             WalletSdk.init(

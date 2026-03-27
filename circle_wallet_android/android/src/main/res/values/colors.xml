@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colours applied to Circle SDK screens -->
+
+    <!-- Background -->
+    <color name="pw_background">#0D0F11</color>
+    <color name="pw_surface">#161A1E</color>
+
+    <!-- Accent / brand blue replaces all Circle blue -->
+    <color name="pw_main">#6172F3</color>
+    <color name="pw_input_fill">#1C2126</color>
+
+    <!-- Text -->
+    <color name="pw_text_primary">#FFFFFF</color>
+    <color name="pw_text_secondary">#9E9FA0</color>
+
+    <!-- Buttons -->
+    <color name="pw_button_background">#FCFCFD</color>
+    <color name="pw_button_text">#000000</color>
+
+    <!-- PIN dots / highlight color -->
+    <color name="pw_pin_dot">#6172F3</color>
+
+    <!-- Borders / dividers -->
+    <color name="pw_border">#252A30</color>
+
+    <!-- Error -->
+    <color name="pw_error">#FF6584</color>
+</resources>

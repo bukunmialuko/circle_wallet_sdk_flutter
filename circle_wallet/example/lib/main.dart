@@ -2,28 +2,38 @@ import 'package:circle_wallet/circle_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-void main() => runApp(const MyApp());
+// ─────────────────────────────────────────────────────────────────────────────
+// Brand Tokens
+// ─────────────────────────────────────────────────────────────────────────────
 
-// ---------------------------------------------------------------------------
+abstract final class AppColors {
+  static const background = Color(0xFF0D0F11);
+  static const surface = Color(0xFF161A1E);
+  static const surfaceVariant = Color(0xFF1C2126);
+  static const border = Color(0xFF252A30);
+  static const accent = Color(0xFF6172F3);
+  static const Color primaryText = Colors.white;
+  static const secondaryText = Color(0xFF9E9FA0);
+  static const buttonBg = Color(0xFFFCFCFD);
+  static const buttonText = Color(0xFF000000);
+  static const error = Color(0xFFFF6584);
+  static const success = Color(0xFF3CBA8B);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Router
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 final _router = GoRouter(
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: '/execute',
-      builder: (context, state) => const ExecutePage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const HomePage()),
+    GoRoute(path: '/execute', builder: (context, state) => const ExecutePage()),
   ],
 );
 
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // App
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,40 +42,71 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-      title: 'CircleWallet',
+      title: 'Ribh Wallet SDK',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6C63FF),
-          brightness: Brightness.dark,
+        colorScheme: const ColorScheme.dark(
+          primary: AppColors.accent,
+          onPrimary: Colors.white,
+          secondary: AppColors.accent,
+          onSecondary: Colors.white,
+          error: AppColors.error,
+        ),
+        scaffoldBackgroundColor: AppColors.background,
+        fontFamily: 'OpenRunde',
+        textTheme: ThemeData.dark().textTheme.apply(
+          fontFamily: 'OpenRunde',
+          bodyColor: AppColors.primaryText,
+          displayColor: AppColors.primaryText,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.background,
+          elevation: 0,
+          centerTitle: false,
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenRunde',
+            color: AppColors.primaryText,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
+          iconTheme: IconThemeData(color: AppColors.primaryText),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: const Color(0xFF1E1E2E),
+          fillColor: AppColors.surfaceVariant,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF3A3A4C)),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: AppColors.border),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF6C63FF), width: 2),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: AppColors.accent, width: 1.5),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFFFF6584)),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: AppColors.error),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFFFF6584), width: 2),
+            borderRadius: BorderRadius.circular(14),
+            borderSide:
+                const BorderSide(color: AppColors.error, width: 1.5),
           ),
-          labelStyle: const TextStyle(color: Color(0xFF9090A8)),
-          hintStyle: const TextStyle(color: Color(0xFF5A5A6E)),
-          prefixIconColor: const Color(0xFF6C63FF),
+          labelStyle: const TextStyle(
+            fontFamily: 'OpenRunde',
+            color: AppColors.secondaryText,
+            fontSize: 14,
+          ),
+          hintStyle: TextStyle(
+            fontFamily: 'OpenRunde',
+            color: AppColors.secondaryText.withAlpha(150),
+            fontSize: 14,
+          ),
+          prefixIconColor: AppColors.secondaryText,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 18,
@@ -73,48 +114,50 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF6C63FF),
-            foregroundColor: Colors.white,
+            backgroundColor: AppColors.buttonBg,
+            foregroundColor: AppColors.buttonText,
             padding: const EdgeInsets.symmetric(vertical: 18),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(100),
             ),
             elevation: 0,
             textStyle: const TextStyle(
+              fontFamily: 'OpenRunde',
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
             ),
           ),
         ),
-        scaffoldBackgroundColor: const Color(0xFF0F0F1A),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF0F0F1A),
-          elevation: 0,
-          centerTitle: false,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
         cardTheme: CardThemeData(
-          color: const Color(0xFF1A1A2E),
+          color: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: Color(0xFF2A2A40)),
+            side: const BorderSide(color: AppColors.border),
           ),
           elevation: 0,
+        ),
+        dividerTheme: const DividerThemeData(color: AppColors.border),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: AppColors.surfaceVariant,
+          contentTextStyle: const TextStyle(
+            fontFamily: 'OpenRunde',
+            color: AppColors.primaryText,
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );
   }
 }
 
-// ---------------------------------------------------------------------------
+void main() => runApp(const MyApp());
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Home Page
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -137,12 +180,8 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: const Color(0xFFFF6584),
+          backgroundColor: AppColors.error,
           content: Text('$error'),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
         ),
       );
     } finally {
@@ -181,22 +220,24 @@ class _HomePageState extends State<HomePage> {
           width: 52,
           height: 52,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF6C63FF), Color(0xFF9D5CFF)],
-            ),
+            color: AppColors.accent.withAlpha(26),
             borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: AppColors.accent.withAlpha(60),
+            ),
           ),
           child: const Icon(
             Icons.account_balance_wallet_rounded,
-            color: Colors.white,
-            size: 28,
+            color: AppColors.accent,
+            size: 26,
           ),
         ),
         const SizedBox(height: 20),
         const Text(
-          'Circle Wallet',
+          'Ribh Wallet',
           style: TextStyle(
-            color: Colors.white,
+            fontFamily: 'OpenRunde',
+            color: AppColors.primaryText,
             fontSize: 32,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.5,
@@ -206,7 +247,8 @@ class _HomePageState extends State<HomePage> {
         const Text(
           'SDK Example App',
           style: TextStyle(
-            color: Color(0xFF9090A8),
+            fontFamily: 'OpenRunde',
+            color: AppColors.secondaryText,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
@@ -226,17 +268,18 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Icon(
                   Icons.info_outline_rounded,
-                  color: Color(0xFF6C63FF),
-                  size: 20,
+                  color: AppColors.secondaryText,
+                  size: 18,
                 ),
                 SizedBox(width: 8),
                 Text(
                   'Platform Info',
                   style: TextStyle(
-                    color: Color(0xFF9090A8),
+                    fontFamily: 'OpenRunde',
+                    color: AppColors.secondaryText,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
+                    letterSpacing: 0.4,
                   ),
                 ),
               ],
@@ -246,16 +289,21 @@ class _HomePageState extends State<HomePage> {
               Text(
                 _platformName!,
                 style: const TextStyle(
-                  color: Colors.white,
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.primaryText,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 12),
             ] else
-              const Text(
+              Text(
                 'Not fetched yet',
-                style: TextStyle(color: Color(0xFF5A5A6E), fontSize: 15),
+                style: TextStyle(
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.secondaryText.withAlpha(150),
+                  fontSize: 15,
+                ),
               ),
             const SizedBox(height: 4),
             SizedBox(
@@ -268,11 +316,13 @@ class _HomePageState extends State<HomePage> {
                         height: 18,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color: AppColors.buttonText,
                         ),
                       )
                     : const Icon(Icons.refresh_rounded, size: 20),
-                label: Text(_isLoading ? 'Fetching...' : 'Get Platform Name'),
+                label: Text(
+                  _isLoading ? 'Fetching...' : 'Get Platform Name',
+                ),
               ),
             ),
           ],
@@ -286,11 +336,6 @@ class _HomePageState extends State<HomePage> {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () => context.go('/execute'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1E1E2E),
-          foregroundColor: Colors.white,
-          side: const BorderSide(color: Color(0xFF6C63FF)),
-        ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -304,9 +349,9 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // Execute Page
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 class ExecutePage extends StatefulWidget {
   const ExecutePage({super.key});
@@ -336,12 +381,10 @@ class _ExecutePageState extends State<ExecutePage> {
 
   Future<void> _onExecute() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-
     setState(() {
       _isExecuting = true;
       _result = null;
     });
-
     try {
       final result = await execute(
         appId: _appIdController.text.trim(),
@@ -355,12 +398,8 @@ class _ExecutePageState extends State<ExecutePage> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: const Color(0xFFFF6584),
+          backgroundColor: AppColors.error,
           content: Text('$error'),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
         ),
       );
     } finally {
@@ -411,13 +450,14 @@ class _ExecutePageState extends State<ExecutePage> {
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
           ),
           const SizedBox(width: 4),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Execute Challenge',
                 style: TextStyle(
-                  color: Colors.white,
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.primaryText,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
@@ -425,7 +465,8 @@ class _ExecutePageState extends State<ExecutePage> {
               Text(
                 'Fill in the fields to proceed',
                 style: TextStyle(
-                  color: Colors.white.withAlpha(120),
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.secondaryText,
                   fontSize: 13,
                 ),
               ),
@@ -443,7 +484,10 @@ class _ExecutePageState extends State<ExecutePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _SectionLabel(icon: Icons.apps_rounded, label: 'Application'),
+            const _SectionLabel(
+              icon: Icons.apps_rounded,
+              label: 'Application',
+            ),
             const SizedBox(height: 12),
             _FormField(
               controller: _appIdController,
@@ -495,10 +539,6 @@ class _ExecutePageState extends State<ExecutePage> {
       height: 56,
       child: ElevatedButton(
         onPressed: _isExecuting ? null : _onExecute,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF6C63FF),
-          disabledBackgroundColor: const Color(0xFF3A3A5C),
-        ),
         child: _isExecuting
             ? const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -508,7 +548,7 @@ class _ExecutePageState extends State<ExecutePage> {
                     width: 20,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: Colors.white,
+                      color: AppColors.buttonText,
                     ),
                   ),
                   SizedBox(width: 12),
@@ -532,7 +572,7 @@ class _ExecutePageState extends State<ExecutePage> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: Color(0xFF3CBA8B)),
+        side: const BorderSide(color: AppColors.success),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -543,23 +583,24 @@ class _ExecutePageState extends State<ExecutePage> {
               children: [
                 Icon(
                   Icons.check_circle_rounded,
-                  color: Color(0xFF3CBA8B),
+                  color: AppColors.success,
                   size: 20,
                 ),
                 SizedBox(width: 8),
                 Text(
                   'Result',
                   style: TextStyle(
-                    color: Color(0xFF3CBA8B),
+                    fontFamily: 'OpenRunde',
+                    color: AppColors.success,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
+                    letterSpacing: 0.4,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            const Divider(color: Color(0xFF2A2A40)),
+            const Divider(),
             const SizedBox(height: 8),
             ...entries.map(
               (e) => Padding(
@@ -570,23 +611,27 @@ class _ExecutePageState extends State<ExecutePage> {
                     Text(
                       '${e.key}',
                       style: const TextStyle(
-                        color: Color(0xFF9090A8),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
                         fontFamily: 'monospace',
+                        color: AppColors.secondaryText,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const Text(
                       '  ·  ',
-                      style: TextStyle(color: Color(0xFF4A4A5E)),
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        color: AppColors.border,
+                        fontSize: 12,
+                      ),
                     ),
                     Expanded(
                       child: Text(
                         '${e.value}',
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
                           fontFamily: 'monospace',
+                          color: AppColors.primaryText,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -601,9 +646,9 @@ class _ExecutePageState extends State<ExecutePage> {
   }
 }
 
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // Shared small widgets
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 class _SectionLabel extends StatelessWidget {
   const _SectionLabel({required this.icon, required this.label});
@@ -615,12 +660,13 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF6C63FF)),
+        Icon(icon, size: 15, color: AppColors.secondaryText),
         const SizedBox(width: 6),
         Text(
           label.toUpperCase(),
           style: const TextStyle(
-            color: Color(0xFF6C63FF),
+            fontFamily: 'OpenRunde',
+            color: AppColors.secondaryText,
             fontSize: 11,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,
@@ -664,7 +710,11 @@ class _FormFieldState extends State<_FormField> {
     return TextFormField(
       controller: widget.controller,
       obscureText: _obscured,
-      style: const TextStyle(color: Colors.white, fontSize: 15),
+      style: const TextStyle(
+        fontFamily: 'OpenRunde',
+        color: AppColors.primaryText,
+        fontSize: 15,
+      ),
       decoration: InputDecoration(
         labelText: widget.label,
         hintText: widget.hint,
@@ -676,7 +726,7 @@ class _FormFieldState extends State<_FormField> {
                       ? Icons.visibility_off_rounded
                       : Icons.visibility_rounded,
                   size: 20,
-                  color: const Color(0xFF6060A0),
+                  color: AppColors.secondaryText,
                 ),
                 onPressed: () => setState(() => _obscured = !_obscured),
               )

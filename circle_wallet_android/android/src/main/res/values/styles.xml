@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+     Override Circle SDK styles to match the Ribh brand.
+     The SDK inherits from its own base theme; overriding named attributes
+     here re-colours all SDK-rendered screens (PIN entry, security questions,
+     confirmation, etc.).
+    -->
+
+    <!-- Activity / page background -->
+    <style name="PWSdk.Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/pw_background</item>
+        <item name="android:colorBackground">@color/pw_background</item>
+
+        <!-- Primary accent (buttons, active indicators, progress) -->
+        <item name="colorPrimary">@color/pw_main</item>
+        <item name="colorPrimaryDark">@color/pw_main</item>
+        <item name="colorAccent">@color/pw_main</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/pw_text_primary</item>
+        <item name="android:textColorSecondary">@color/pw_text_secondary</item>
+
+        <!-- Input fields -->
+        <item name="editTextBackground">@color/pw_input_fill</item>
+        <item name="colorControlNormal">@color/pw_border</item>
+        <item name="colorControlActivated">@color/pw_main</item>
+
+        <!-- Buttons -->
+        <item name="buttonStyle">@style/PWSdk.Button</item>
+    </style>
+
+    <style name="PWSdk.Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/pw_button_background</item>
+        <item name="android:textColor">@color/pw_button_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+</resources>

@@ -60,7 +60,35 @@ extension WalletSdkAdapter: WalletSdkLayoutProvider {
         ]
     }
 
-    func themeFont() -> ThemeConfig.ThemeFont? { return nil }
+    func themeFont() -> ThemeConfig.ThemeFont? {
+        // "Open Runde" is not bundled in iOS by default; Nunito Sans is the
+        // closest available system-style match. Swap the font name below once
+        // the font is embedded in the host app bundle.
+        guard let font = UIFont(name: "NunitoSans-Regular", size: 16) else {
+            return nil
+        }
+        return ThemeConfig.ThemeFont(
+            urlString: nil,
+            bigTitleFont: UIFont(name: "NunitoSans-Bold", size: 28) ?? font,
+            titleFont: UIFont(name: "NunitoSans-Bold", size: 20) ?? font,
+            subtitleFont: UIFont(name: "NunitoSans-SemiBold", size: 16) ?? font,
+            bodyFont: font,
+            labelFont: UIFont(name: "NunitoSans-Regular", size: 14) ?? font
+        )
+    }
+
+    // Brand colour palette mirroring the Android resource overrides
+    private enum BrandColor {
+        static let background   = UIColor(hex: "#0D0F11")
+        static let surface      = UIColor(hex: "#161A1E")
+        static let accent       = UIColor(hex: "#6172F3")
+        static let primaryText  = UIColor.white
+        static let secondaryText = UIColor(hex: "#9E9FA0")
+        static let buttonBg     = UIColor(hex: "#FCFCFD")
+        static let buttonText   = UIColor.black
+        static let inputFill    = UIColor(hex: "#1C2126")
+        static let border       = UIColor(hex: "#252A30")
+    }
 
     func imageStore() -> ImageStore {
         ImageStore(local: [:], remote: [:])
