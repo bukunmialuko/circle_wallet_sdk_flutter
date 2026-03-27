@@ -40,5 +40,12 @@ abstract class CircleWalletPlatform extends PlatformInterface {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
+    bool enableBiometricsPin = true,
   });
+
+  /// A stream that emits whenever the user taps "Forgot PIN?" inside the
+  /// SDK UI. Listen to this stream to start the PIN-restore flow.
+  ///
+  /// Default implementation returns an empty stream. Android overrides this.
+  Stream<void> get forgotPinStream => const Stream.empty();
 }

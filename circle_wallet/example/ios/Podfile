@@ -47,4 +47,19 @@ post_install do |installer|
          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
      end
   end
+
+  # Add CirclePWTheme.json to the main app bundle
+  require 'xcodeproj'
+  app_project_path = File.join(File.dirname(__FILE__), 'Runner.xcodeproj')
+  app_project = Xcodeproj::Project.open(app_project_path)
+  app_target = app_project.targets.find { |t| t.name == 'Runner' }
+  
+  group = app_project.main_group.find_subpath('Runner', true)
+  file_ref = group.files.find { |f| f.path == 'CirclePWTheme.json' }
+  unless file_ref
+    file_ref = group.new_reference('CirclePWTheme.json')
+    app_target.add_resources([file_ref])
+    app_project.save
+    puts "=== Added CirclePWTheme.json to Xcode project ==="
+  end
 end

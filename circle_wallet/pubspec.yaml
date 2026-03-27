@@ -15,14 +15,14 @@ flutter:
         default_package: circle_wallet_ios
 
 dependencies:
-  flutter:
-    sdk: flutter
   circle_wallet_android:
     path: ../circle_wallet_android
   circle_wallet_ios:
     path: ../circle_wallet_ios
   circle_wallet_platform_interface:
     path: ../circle_wallet_platform_interface
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

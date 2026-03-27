@@ -15,11 +15,21 @@ Future<Map<dynamic, dynamic>> execute({
   required String userToken,
   required String encryptionKey,
   required String challengeId,
+  bool enableBiometricsPin = true,
 }) {
   return CircleWalletPlatform.instance.execute(
     appId: appId,
     userToken: userToken,
     encryptionKey: encryptionKey,
     challengeId: challengeId,
+    enableBiometricsPin: enableBiometricsPin,
   );
 }
+
+/// A stream that emits when the user taps "Forgot PIN?" in the SDK UI.
+///
+/// Listen to this stream to initiate the PIN-restore flow:
+///   1. Call your backend's `POST /user/pin/restore` to obtain a restore
+///      challenge ID.
+///   2. Call [execute] with that challenge ID to let the user set a new PIN.
+Stream<void> get forgotPinStream => _platform.forgotPinStream;

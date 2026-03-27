@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+     Override Circle SDK styles to match the Ribh brand on Android.
+     The SDK uses circlepw_ prefixed styles for its UI components.
+    -->
+
+    <style name="PWSdk.Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/circlepw_background</item>
+        <item name="android:colorBackground">@color/circlepw_background</item>
+
+        <!-- Primary accent -->
+        <item name="colorPrimary">@color/circlepw_main_bt_background</item>
+        <item name="colorPrimaryDark">@color/circlepw_background</item>
+        <item name="colorAccent">@color/circlepw_text_action</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/circlepw_text_main</item>
+        <item name="android:textColorSecondary">@color/circlepw_text_auxiliary</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+
+        <!-- Input fields -->
+        <item name="colorControlNormal">@color/circlepw_divider</item>
+        <item name="colorControlActivated">@color/circlepw_text_action</item>
+        <item name="colorControlHighlight">@color/circlepw_text_action</item>
+    </style>
+
+    <!-- Typography Overrides -->
+    <style name="circlepw_heading3">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/open_runde_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="circlepw_heading4">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/open_runde_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="circlepw_heading5">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/open_runde_semibold</item>
+    </style>
+    <style name="circlepw_body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+    </style>
+    <style name="circlepw_body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+    </style>
+    <style name="circlepw_caption1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+    </style>
+    <style name="circlepw_caption2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+    </style>
+    <style name="circlepw_metadata1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/open_runde_regular</item>
+    </style>
+    <style name="circlepw_actionText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/open_runde_semibold</item>
+    </style>
+    <style name="circlepw_pinDigitText">
+        <item name="android:textSize">40sp</item>
+        <item name="android:fontFamily">@font/open_runde_bold</item>
+    </style>
+    <style name="circlepw_mainButtonText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/open_runde_semibold</item>
+    </style>
+    <style name="circlepw_secondButtonText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/open_runde_semibold</item>
+    </style>
+    <style name="circlepw_plainButtonText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/open_runde_semibold</item>
+    </style>
+    <style name="circlepw_toolbarTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/open_runde_bold</item>
+    </style>
+    <style name="circlepw_otpHeadText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/open_runde_bold</item>
+    </style>
+
+    <!-- Date Picker Customization -->
+    <style name="circlepw_datePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/circlepw_text_action</item>
+        <item name="colorControlActivated">@color/circlepw_text_action</item>
+        <item name="android:windowBackground">@color/circlepw_background</item>
+        <item name="android:textColorPrimary">@color/circlepw_text_main</item>
+        <item name="android:textColorSecondary">@color/circlepw_text_auxiliary</item>
+    </style>
+</resources>

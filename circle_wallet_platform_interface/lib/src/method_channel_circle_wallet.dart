@@ -19,6 +19,7 @@ class MethodChannelCircleWallet extends CircleWalletPlatform {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
+    bool enableBiometricsPin = true,
   }) async {
     try {
       final args = <String, dynamic>{
@@ -26,6 +27,7 @@ class MethodChannelCircleWallet extends CircleWalletPlatform {
         'userToken': userToken,
         'encryptionKey': encryptionKey,
         'challengeId': challengeId,
+        'enableBiometricsPin': enableBiometricsPin,
       };
 
       final result = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(

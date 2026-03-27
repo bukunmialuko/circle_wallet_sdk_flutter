@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		067F53A1A4CCD21718419DA6 /* CirclePWTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = D7FBE1790F343157C6353025 /* CirclePWTheme.json */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		288A0847B0951B036F686746 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8186056F354D334767D2F72A /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -51,6 +52,7 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C147111CF9000F007C117D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D7FBE1790F343157C6353025 /* CirclePWTheme.json */ = {isa = PBXFileReference; includeInIndex = 1; path = CirclePWTheme.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				97C147111CF9000F007C117D /* SceneDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				D7FBE1790F343157C6353025 /* CirclePWTheme.json */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				067F53A1A4CCD21718419DA6 /* CirclePWTheme.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
