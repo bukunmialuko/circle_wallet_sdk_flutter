@@ -3,6 +3,7 @@ package com.example.verygoodcore
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -13,6 +14,8 @@ import circle.programmablewallet.sdk.WalletSdk
 import circle.programmablewallet.sdk.api.ApiError
 import circle.programmablewallet.sdk.api.Callback
 import circle.programmablewallet.sdk.api.ExecuteWarning
+import circle.programmablewallet.sdk.api.ExecuteEvent
+import circle.programmablewallet.sdk.presentation.EventListener
 import circle.programmablewallet.sdk.presentation.SecurityQuestion
 import circle.programmablewallet.sdk.presentation.SettingsManagement
 import circle.programmablewallet.sdk.result.ExecuteResult
@@ -20,6 +23,8 @@ import circle.programmablewallet.sdk.result.ExecuteResult
 
 class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
+    private lateinit var eventChannel: EventChannel
+    private var eventSink: EventChannel.EventSink? = null
     private var applicationContext: Context? = null
     private var activity: Activity? = null
 
@@ -29,6 +34,18 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         applicationContext = flutterPluginBinding.applicationContext
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "circle_wallet_android")
         channel.setMethodCallHandler(this)
+        eventChannel = EventChannel(
+            flutterPluginBinding.binaryMessenger,
+            "circle_wallet_android/events"
+        )
+        eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, sink: EventChannel.EventSink) {
+                eventSink = sink
+            }
+            override fun onCancel(arguments: Any?) {
+                eventSink = null
+            }
+        })
         applicationContext?.let { setupSdkOnce(it) }
     }
 
@@ -52,6 +69,8 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        eventChannel.setStreamHandler(null)
+        eventSink = null
         applicationContext = null
     }
 
@@ -76,7 +95,23 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         WalletSdk.setCustomUserAgent("FLUTTER-CIRCLE-WALLET")
 
+        // Register icon provider — supplies white vector drawables for showPin,
+        // hidePin, back, dropdownArrow so they are visible on the dark theme.
+        WalletSdk.setViewSetterProvider(FlutterViewSetterProvider())
+
         WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider())
+
+        // Listen for the forgotPin event and forward it via EventChannel stream.
+        // Flutter subscribes to circle_wallet_android/events and filters on "forgotPin".
+        WalletSdk.addEventListener(object : EventListener {
+            override fun onEvent(event: ExecuteEvent) {
+                if (event == ExecuteEvent.forgotPin) {
+                    activity?.runOnUiThread {
+                        eventSink?.success("forgotPin")
+                    }
+                }
+            }
+        })
 
         WalletSdk.setSecurityQuestions(
             arrayOf(
@@ -146,7 +181,6 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         try {
-            // 1) INIT
             val settings = SettingsManagement().apply {
                 isEnableBiometricsPin = enableBiometricsPin
             }

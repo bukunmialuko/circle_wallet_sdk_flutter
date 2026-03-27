@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:circle_wallet/circle_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,6 +54,7 @@ class MyApp extends StatelessWidget {
           secondary: AppColors.accent,
           onSecondary: Colors.white,
           error: AppColors.error,
+          surface: AppColors.background,
         ),
         scaffoldBackgroundColor: AppColors.background,
         fontFamily: 'OpenRunde',
@@ -370,13 +373,154 @@ class _ExecutePageState extends State<ExecutePage> {
   bool _isExecuting = false;
   Map<dynamic, dynamic>? _result;
 
+  StreamSubscription<void>? _forgotPinSub;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen for "Forgot PIN?" events pushed from the native SDK.
+    _forgotPinSub = forgotPinStream.listen((_) {
+      if (!mounted) return;
+      unawaited(_showRestorePinSheet());
+    });
+  }
+
   @override
   void dispose() {
     _appIdController.dispose();
     _userTokenController.dispose();
     _encryptionKeyController.dispose();
     _challengeIdController.dispose();
+    _forgotPinSub?.cancel();
     super.dispose();
+  }
+
+  // ── Forgot PIN restore flow ─────────────────────────────────────────────
+  // Called when the user taps "Forgot PIN?" inside the SDK UI.
+  // The app must:
+  //  1. Call backend POST /user/pin/restore → get a restore challengeId.
+  //  2. Invoke execute() again with that challengeId.
+
+  Future<void> _showRestorePinSheet() async {
+    final restoreChallengeController = TextEditingController();
+
+    final challengeId = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 28,
+            bottom: MediaQuery.of(ctx).viewInsets.bottom + 28,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Handle bar
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.border,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Restore PIN',
+                style: TextStyle(
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.primaryText,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Call your backend POST /user/pin/restore to obtain a restore challenge ID, then paste it below.',
+                style: TextStyle(
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.secondaryText,
+                  fontSize: 13,
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: restoreChallengeController,
+                autofocus: true,
+                style: const TextStyle(
+                  fontFamily: 'OpenRunde',
+                  color: AppColors.primaryText,
+                  fontSize: 14,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Restore Challenge ID',
+                  hintText: 'e.g. restore-challenge-uuid',
+                  prefixIcon: const Icon(Icons.lock_reset_rounded),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppColors.border),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final id = restoreChallengeController.text.trim();
+                    if (id.isNotEmpty) Navigator.of(ctx).pop(id);
+                  },
+                  child: const Text('Restore PIN'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    restoreChallengeController.dispose();
+
+    if (challengeId == null || challengeId.isEmpty) return;
+    if (!mounted) return;
+
+    // Re-execute with the restore challengeId.
+    setState(() {
+      _isExecuting = true;
+      _result = null;
+    });
+    try {
+      final result = await execute(
+        appId: _appIdController.text.trim(),
+        userToken: _userTokenController.text.trim(),
+        encryptionKey: _encryptionKeyController.text.trim(),
+        challengeId: challengeId,
+        enableBiometricsPin: false,
+      );
+      if (!mounted) return;
+      setState(() => _result = result);
+    } on Exception catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: AppColors.error,
+          content: Text('Restore failed: $error'),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isExecuting = false);
+    }
   }
 
   Future<void> _onExecute() async {
@@ -391,6 +535,7 @@ class _ExecutePageState extends State<ExecutePage> {
         userToken: _userTokenController.text.trim(),
         encryptionKey: _encryptionKeyController.text.trim(),
         challengeId: _challengeIdController.text.trim(),
+        enableBiometricsPin: false,
       );
       if (!mounted) return;
       setState(() => _result = result);

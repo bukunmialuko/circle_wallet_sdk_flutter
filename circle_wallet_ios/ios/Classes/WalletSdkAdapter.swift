@@ -7,9 +7,9 @@ final class WalletSdkAdapter: NSObject {
     private var didSetProviders = false
     private var lastConfigKey: String?
 
-    func ensureConfigured(endPoint: String, appId: String) throws {
+    func ensureConfigured(endPoint: String, appId: String, enableBiometricsPin: Bool) throws {
         let trimmedAppId = appId.trimmingCharacters(in: .whitespacesAndNewlines)
-        let key = "\(endPoint)|\(trimmedAppId)"
+        let key = "\(endPoint)|\(trimmedAppId)|\(enableBiometricsPin)"
 
         if !didSetProviders {
             WalletSdk.shared.setLayoutProvider(self)
@@ -20,8 +20,7 @@ final class WalletSdkAdapter: NSObject {
 
         if lastConfigKey != key {
             let settings = WalletSdk.SettingsManagement(
-                enableBiometricsPin: false,
-                pinCodeInputType: .numericPad
+                enableBiometricsPin: enableBiometricsPin
             )
             let configuration = WalletSdk.Configuration(
                 endPoint: endPoint,
@@ -61,19 +60,11 @@ extension WalletSdkAdapter: WalletSdkLayoutProvider {
     }
 
     func themeFont() -> ThemeConfig.ThemeFont? {
-        // "Open Runde" is not bundled in iOS by default; Nunito Sans is the
-        // closest available system-style match. Swap the font name below once
-        // the font is embedded in the host app bundle.
-        guard let font = UIFont(name: "NunitoSans-Regular", size: 16) else {
-            return nil
-        }
         return ThemeConfig.ThemeFont(
-            urlString: nil,
-            bigTitleFont: UIFont(name: "NunitoSans-Bold", size: 28) ?? font,
-            titleFont: UIFont(name: "NunitoSans-Bold", size: 20) ?? font,
-            subtitleFont: UIFont(name: "NunitoSans-SemiBold", size: 16) ?? font,
-            bodyFont: font,
-            labelFont: UIFont(name: "NunitoSans-Regular", size: 14) ?? font
+            regular: "OpenRunde-Regular",
+            medium: "OpenRunde-Medium",
+            semibold: "OpenRunde-Semibold",
+            bold: "OpenRunde-Bold"
         )
     }
 
@@ -108,10 +99,34 @@ extension WalletSdkAdapter: WalletSdkDelegate {
     }
 
     func walletSdk(controller: UIViewController, onForgetPINButtonSelected onSelect: Void) {
-        controller.dismiss(animated: true)
+        DispatchQueue.main.async {
+            controller.dismiss(animated: true)
+        }
     }
 
     func walletSdk(controller: UIViewController, onSendAgainButtonSelected onSelect: Void) {
-        controller.dismiss(animated: true)
+        DispatchQueue.main.async {
+            controller.dismiss(animated: true)
+        }
+    }
+}
+
+extension UIColor {
+    convenience init(hex: String, defaultColor: UIColor = .white) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+        var rgb: UInt64 = 0
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+            self.init(cgColor: defaultColor.cgColor)
+            return
+        }
+        if hexSanitized.count == 6 {
+            let r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+            let g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+            let b = CGFloat(rgb & 0x0000FF) / 255.0
+            self.init(red: r, green: g, blue: b, alpha: 1.0)
+        } else {
+            self.init(cgColor: defaultColor.cgColor)
+        }
     }
 }

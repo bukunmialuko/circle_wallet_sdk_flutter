@@ -41,9 +41,10 @@ public class CircleWalletPlugin: NSObject, FlutterPlugin {
         let userToken = args["userToken"] as! String
         let encryptionKey = args["encryptionKey"] as! String
         let challengeId = args["challengeId"] as! String
+        let enableBiometricsPin = args["enableBiometricsPin"] as? Bool ?? true
 
         do {
-            try configureSDK(appId: appId)
+            try configureSDK(appId: appId, enableBiometricsPin: enableBiometricsPin)
         } catch let apiError as ApiError {
             result(FlutterError(
                 code: "CONFIG_ERROR",
@@ -82,7 +83,7 @@ public class CircleWalletPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    private func configureSDK(appId: String) throws {
-        try adapter.ensureConfigured(endPoint: CIRCLE_ENDPOINT, appId: appId)
+    private func configureSDK(appId: String, enableBiometricsPin: Bool) throws {
+        try adapter.ensureConfigured(endPoint: CIRCLE_ENDPOINT, appId: appId, enableBiometricsPin: enableBiometricsPin)
     }
 }
