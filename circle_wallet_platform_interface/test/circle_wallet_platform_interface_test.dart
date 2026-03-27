@@ -13,7 +13,7 @@ class CircleWalletMock extends CircleWalletPlatform {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
-    bool enableBiometricsPin = true,
+    bool enableBiometricsPin = false,
   }) {
     // TODO: implement execute
     throw UnimplementedError();

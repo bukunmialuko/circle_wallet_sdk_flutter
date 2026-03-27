@@ -8,27 +8,33 @@ class CircleWalletAndroid extends CircleWalletPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('circle_wallet_android');
 
-  /// The event channel used to receive events from the native plugin.
-  ///
-  /// Currently emits a single event type: `forgotPin`.
-  @visibleForTesting
-  final eventChannel = const EventChannel('circle_wallet_android/events');
+  /// Creates the Android implementation, registering the native call handler.
+  CircleWalletAndroid() {
+    // Listen for native → Flutter calls initiated by the native plugin.
+    methodChannel.setMethodCallHandler(_handleNativeCall);
+  }
 
-  /// Registers this class as the default instance of [CircleWalletPlatform].
+  /// Registers this class as the default instance of [CircleWalletPlatform]
   static void registerWith() {
     CircleWalletPlatform.instance = CircleWalletAndroid();
   }
 
-  /// A stream that emits whenever the user taps "Forgot PIN?" inside the
-  /// SDK UI. Listen to this to trigger the PIN-restore flow:
-  ///   1. Call `POST /user/pin/restore` on your backend to get a restore
-  ///      challenge ID.
-  ///   2. Call [execute] again with that challenge ID.
-  @override
-  Stream<void> get forgotPinStream =>
-      eventChannel.receiveBroadcastStream().where(
-            (event) => event == 'forgotPin',
-          );
+  /// Callback invoked when the user taps "Forgot PIN?" inside the SDK UI.
+  ///
+  /// Your app should:
+  ///  1. Call your backend's `POST /user/pin/restore` to obtain a restore
+  ///     challenge ID.
+  ///  2. Call [execute] again with that new challenge ID.
+  VoidCallback? onForgotPin;
+
+  Future<dynamic> _handleNativeCall(MethodCall call) async {
+    switch (call.method) {
+      case 'onForgotPin':
+        onForgotPin?.call();
+      default:
+        throw MissingPluginException('${call.method} not implemented');
+    }
+  }
 
   @override
   Future<String?> getPlatformName() {

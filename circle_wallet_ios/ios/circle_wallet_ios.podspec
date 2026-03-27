@@ -18,6 +18,9 @@ Pod::Spec.new do |s|
   s.dependency 'CircleProgrammableWalletSDK_static', '1.4.0'
 
   s.source_files = 'Classes/**/*.{swift,h,m}'
+  s.resource_bundles = {
+    'circle_wallet_ios' => ['Assets.xcassets']
+  }
 
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES'

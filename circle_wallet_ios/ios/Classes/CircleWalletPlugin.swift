@@ -41,7 +41,7 @@ public class CircleWalletPlugin: NSObject, FlutterPlugin {
         let userToken = args["userToken"] as! String
         let encryptionKey = args["encryptionKey"] as! String
         let challengeId = args["challengeId"] as! String
-        let enableBiometricsPin = args["enableBiometricsPin"] as? Bool ?? true
+        let enableBiometricsPin = args["enableBiometricsPin"] as? Bool ?? false
 
         do {
             try configureSDK(appId: appId, enableBiometricsPin: enableBiometricsPin)

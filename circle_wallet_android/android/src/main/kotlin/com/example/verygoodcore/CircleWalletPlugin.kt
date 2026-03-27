@@ -19,9 +19,16 @@ import circle.programmablewallet.sdk.presentation.EventListener
 import circle.programmablewallet.sdk.presentation.SecurityQuestion
 import circle.programmablewallet.sdk.presentation.SettingsManagement
 import circle.programmablewallet.sdk.result.ExecuteResult
+import android.app.Application
+import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 
 
-class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+
+class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Application.ActivityLifecycleCallbacks {
+
     private lateinit var channel: MethodChannel
     private lateinit var eventChannel: EventChannel
     private var eventSink: EventChannel.EventSink? = null
@@ -47,7 +54,12 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         })
         applicationContext?.let { setupSdkOnce(it) }
+        
+        // Register lifecycle callbacks to surgically hide "Forgot PIN?"
+        val app = applicationContext as? Application
+        app?.registerActivityLifecycleCallbacks(this)
     }
+
 
 
     // ActivityAware (required for SDK execute UI)
@@ -67,12 +79,15 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         activity = null
     }
 
-    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        val app = applicationContext as? Application
+        app?.unregisterActivityLifecycleCallbacks(this)
+        
         channel.setMethodCallHandler(null)
         eventChannel.setStreamHandler(null)
         eventSink = null
         applicationContext = null
     }
+
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
@@ -99,7 +114,7 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         // hidePin, back, dropdownArrow so they are visible on the dark theme.
         WalletSdk.setViewSetterProvider(FlutterViewSetterProvider())
 
-        WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider())
+        WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider(context))
 
         // Listen for the forgotPin event and forward it via EventChannel stream.
         // Flutter subscribes to circle_wallet_android/events and filters on "forgotPin".
@@ -152,7 +167,7 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val userToken = call.argument<String>("userToken")
         val encryptionKey = call.argument<String>("encryptionKey")
         val challengeId = call.argument<String>("challengeId")
-        val enableBiometricsPin = call.argument<Boolean>("enableBiometricsPin") ?: true
+        val enableBiometricsPin = call.argument<Boolean>("enableBiometricsPin") ?: false
 
         if (appId.isNullOrBlank() ||
             userToken.isNullOrBlank() ||
@@ -251,5 +266,47 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    // region ActivityLifecycleCallbacks (Surgical UI Hiding)
 
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+    
+    override fun onActivityStarted(activity: Activity) {
+        // When an SDK activity starts, try to hide the "Forgot PIN?" button immediately
+        hideForgotPinButton(activity)
+    }
+
+    override fun onActivityResumed(activity: Activity) {
+        // Re-check on resume just in case the view was re-inflated
+        hideForgotPinButton(activity)
+    }
+
+    override fun onActivityPaused(activity: Activity) {}
+    override fun onActivityStopped(activity: Activity) {}
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+    override fun onActivityDestroyed(activity: Activity) {}
+
+    /**
+     * Recursively searches for the "Forgot PIN?" button/text and hides it.
+     */
+    private fun hideForgotPinButton(activity: Activity) {
+        val root = activity.findViewById<View>(android.R.id.content) ?: return
+        if (root is ViewGroup) {
+            findAndHideText(root, "Forgot PIN?")
+        }
+    }
+
+    private fun findAndHideText(group: ViewGroup, targetText: String) {
+        for (i in 0 until group.childCount) {
+            val child = group.getChildAt(i)
+            if (child is TextView) {
+                val text = child.text?.toString()?.trim() ?: ""
+                if (text.equals(targetText, ignoreCase = true)) {
+                    child.visibility = View.GONE
+                }
+            } else if (child is ViewGroup) {
+                findAndHideText(child, targetText)
+            }
+        }
+    }
+    // endregion
 }
