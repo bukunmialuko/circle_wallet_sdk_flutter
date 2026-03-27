@@ -24,7 +24,7 @@ class CircleWalletIOS extends CircleWalletPlatform {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
-    bool enableBiometricsPin = true,
+    bool enableBiometricsPin = false,
   }) async {
     try {
       final args = <String, dynamic>{

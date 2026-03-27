@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Owego logo for use as D1 (Security Intro Main) and D5 (Security Confirm Main) in the Circle SDK -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- Outer circle ring -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M512,0C229.23,0 0,229.23 0,512s229.23,512 512,512 512,-229.23 512,-512S794.77,0 512,0zM512,960C264.6,960 64,759.4 64,512S264.6,64 512,64s448,200.6 448,448S759.4,960 512,960z"/>
+
+    <!-- Left crescent shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M420,200C300,260 220,385 220,512s80,252 200,312C300,774 180,654 180,512S300,250 420,200z"/>
+
+    <!-- Right eye/leaf shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M620,350C560,350 510,425 510,512s50,162 110,162 110,-75 110,-162S680,350 620,350zM620,610C580,610 550,565 550,512s30,-98 70,-98 70,45 70,98S660,610 620,610z"/>
+</vector>

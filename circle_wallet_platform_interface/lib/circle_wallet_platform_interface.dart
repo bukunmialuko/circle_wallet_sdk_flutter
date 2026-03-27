@@ -40,7 +40,7 @@ abstract class CircleWalletPlatform extends PlatformInterface {
     required String userToken,
     required String encryptionKey,
     required String challengeId,
-    bool enableBiometricsPin = true,
+    bool enableBiometricsPin = false,
   });
 
   /// A stream that emits whenever the user taps "Forgot PIN?" inside the

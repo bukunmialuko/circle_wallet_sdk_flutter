@@ -15,6 +15,14 @@ final class WalletSdkAdapter: NSObject {
             WalletSdk.shared.setLayoutProvider(self)
             WalletSdk.shared.setErrorMessenger(self)
             WalletSdk.shared.setDelegate(self)
+            
+            // Set global tint appearance for ALL navigation items (Back, Cancel, Done)
+            // to White for visibility on our dark theme.
+            DispatchQueue.main.async {
+                UINavigationBar.appearance().tintColor = .white
+                UIBarButtonItem.appearance().tintColor = .white
+            }
+            
             didSetProviders = true
         }
 
@@ -49,14 +57,51 @@ extension WalletSdkAdapter: WalletSdkLayoutProvider {
 
     func securityQuestionsRequiredCount() -> Int { 2 }
 
-    func securityConfirmItems() -> [SecurityConfirmItem] { [
-        SecurityConfirmItem(image: UIImage(named: "img_item_1"),
-            text: "This is the only way to recover my account access."),
-        SecurityConfirmItem(image: UIImage(named: "img_item_2"),
-            text: "Owego won’t store my answers so it’s my responsibility to remember them."),
-        SecurityConfirmItem(image: UIImage(named: "img_item_3"),
-            text: "I will lose access to my wallet and my digital assets if I forget my answers."),
+    func securityConfirmItems() -> [SecurityConfirmItem] {
+        return [
+            SecurityConfirmItem(
+                image: makeNumberedCircleImage(number: 1),
+                text: "This is the only way to recover my account access."
+            ),
+            SecurityConfirmItem(
+                image: makeNumberedCircleImage(number: 2),
+                text: "Owego won’t store my answers so it’s my responsibility to remember them."
+            ),
+            SecurityConfirmItem(
+                image: makeNumberedCircleImage(number: 3),
+                text: "I will lose access to my wallet and my digital assets if I forget my answers."
+            )
         ]
+    }
+
+    /// Creates a numbered circle image for security confirmation items.
+    /// Circle: #9E9FA0, Number: #6172F3
+    private func makeNumberedCircleImage(number: Int) -> UIImage {
+        let size = CGSize(width: 32, height: 32)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            // Draw Circle (#1C2126 - inactive button background)
+            let circleColor = UIColor(hex: "#1C2126")
+            circleColor.setFill()
+            let circlePath = UIBezierPath(ovalIn: CGRect(origin: .zero, size: size))
+            circlePath.fill()
+
+            // Draw Number (#6172F3)
+            let numberColor = UIColor(hex: "#6172F3")
+            let text = "\(number)"
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont(name: "OpenRunde-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14),
+                .foregroundColor: numberColor
+            ]
+            let stringSize = text.size(withAttributes: attributes)
+            let rect = CGRect(
+                x: (size.width - stringSize.width) / 2,
+                y: (size.height - stringSize.height) / 2,
+                width: stringSize.width,
+                height: stringSize.height
+            )
+            text.draw(in: rect, withAttributes: attributes)
+        }
     }
 
     func themeFont() -> ThemeConfig.ThemeFont? {
@@ -82,7 +127,94 @@ extension WalletSdkAdapter: WalletSdkLayoutProvider {
     }
 
     func imageStore() -> ImageStore {
-        ImageStore(local: [:], remote: [:])
+        // PIN visibility toggle icons (D6, D7)
+        let showPin = UIImage(systemName: "eye")?.withTintColor(.white, renderingMode: .alwaysOriginal) ?? UIImage()
+        let hidePin = UIImage(systemName: "eye.slash")?.withTintColor(.white, renderingMode: .alwaysOriginal) ?? UIImage()
+
+        // Dropdown chevron (D8)
+        let dropdownArrow = UIImage(systemName: "chevron.down")?.withTintColor(.white, renderingMode: .alwaysOriginal) ?? UIImage()
+
+        // Toolbar: back arrow (D10) and close button (D11)
+        // Scaled to 34x34 for an optimal balance of visibility and aesthetics.
+        let toolbarSize = CGSize(width: 34, height: 34)
+        let naviBack = loadIcon(named: "pw_icon_back").resized(to: toolbarSize)
+        let naviClose = loadIcon(named: "pw_icon_close").resized(to: toolbarSize)
+
+        // Hero images: Owego logo for security intro (D1) and confirm (D5) screens.
+        let owegoLogo = loadIcon(named: "owego_logo", fallback: makeOwegoLogoImage())
+
+        return ImageStore(local: [
+            .showPin: showPin,
+            .hidePin: hidePin,
+            .dropdownArrow: dropdownArrow,
+            .naviBack: naviBack,
+            .naviClose: naviClose,
+            .securityIntroMain: owegoLogo,
+            .securityConfirmMain: owegoLogo
+        ], remote: [:])
+    }
+
+    /// Loads an icon from the SDK's resource bundle, falling back to the main app bundle.
+    private func loadIcon(named name: String, fallback: UIImage? = nil) -> UIImage {
+        // 1. Try the SDK's own resource bundle (circle_wallet_ios.bundle)
+        if let bundleURL = Bundle(for: WalletSdkAdapter.self)
+            .url(forResource: "circle_wallet_ios", withExtension: "bundle"),
+           let sdkBundle = Bundle(url: bundleURL),
+           let image = UIImage(named: name, in: sdkBundle, compatibleWith: nil) {
+            return image
+        }
+        // 2. Try main app bundle
+        if let image = UIImage(named: name) {
+            return image
+        }
+        // 3. Fallback
+        return fallback ?? UIImage()
+    }
+
+    /// Programmatically draws a simplified Owego logo as a fallback.
+    private func makeOwegoLogoImage() -> UIImage {
+        let size = CGSize(width: 120, height: 120)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let rect = CGRect(origin: .zero, size: size)
+            // Outer circle
+            let lineWidth: CGFloat = 8
+            UIColor.white.setStroke()
+            UIColor.clear.setFill()
+            let outerPath = UIBezierPath(ovalIn: rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2))
+            outerPath.lineWidth = lineWidth
+            outerPath.stroke()
+
+            // Left crescent arc
+            let crescentPath = UIBezierPath()
+            crescentPath.addArc(withCenter: CGPoint(x: 48, y: 60),
+                                radius: 30, startAngle: -.pi / 2,
+                                endAngle: .pi / 2, clockwise: true)
+            crescentPath.addArc(withCenter: CGPoint(x: 60, y: 60),
+                                radius: 18, startAngle: .pi / 2,
+                                endAngle: -.pi / 2, clockwise: false)
+            crescentPath.close()
+            UIColor.white.setFill()
+            crescentPath.fill()
+
+            // Right leaf/eye shape
+            let leafPath = UIBezierPath()
+            leafPath.move(to: CGPoint(x: 84, y: 60))
+            leafPath.addCurve(to: CGPoint(x: 72, y: 44),
+                              controlPoint1: CGPoint(x: 84, y: 52),
+                              controlPoint2: CGPoint(x: 80, y: 44))
+            leafPath.addCurve(to: CGPoint(x: 60, y: 60),
+                              controlPoint1: CGPoint(x: 64, y: 44),
+                              controlPoint2: CGPoint(x: 60, y: 52))
+            leafPath.addCurve(to: CGPoint(x: 72, y: 76),
+                              controlPoint1: CGPoint(x: 60, y: 68),
+                              controlPoint2: CGPoint(x: 64, y: 76))
+            leafPath.addCurve(to: CGPoint(x: 84, y: 60),
+                              controlPoint1: CGPoint(x: 80, y: 76),
+                              controlPoint2: CGPoint(x: 84, y: 68))
+            leafPath.close()
+            leafPath.fill()
+        }
     }
 
     func displayDateFormat() -> String { "yyyy/MM/dd" }
@@ -95,7 +227,31 @@ extension WalletSdkAdapter: ErrorMessenger {
 extension WalletSdkAdapter: WalletSdkDelegate {
 
     func walletSdk(willPresentController controller: UIViewController) {
-        // SDK handles its own UI
+        // SDK handles its own presentation but we can adjust appearance here
+        DispatchQueue.main.async {
+            // Refined check: handle both direct and Navigation controllers
+            let contentVC = (controller as? UINavigationController)?.topViewController ?? controller
+            if let pinVC = contentVC as? BasePINInputViewController {
+                pinVC.forgotPINButton.isHidden = true
+            }
+            
+            let nav = controller.navigationController ?? (controller as? UINavigationController)
+            nav?.navigationBar.tintColor = .white
+            
+            // Force the entire app window tint to White while the SDK is active
+            UIApplication.shared.windows.first?.tintColor = .white
+            
+            if #available(iOS 13.0, *) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = UIColor(hex: "#0D0F11")
+                appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+                
+                nav?.navigationBar.standardAppearance = appearance
+                nav?.navigationBar.scrollEdgeAppearance = appearance
+                nav?.navigationBar.compactAppearance = appearance
+            }
+        }
     }
 
     func walletSdk(controller: UIViewController, onForgetPINButtonSelected onSelect: Void) {
@@ -107,6 +263,15 @@ extension WalletSdkAdapter: WalletSdkDelegate {
     func walletSdk(controller: UIViewController, onSendAgainButtonSelected onSelect: Void) {
         DispatchQueue.main.async {
             controller.dismiss(animated: true)
+        }
+    }
+}
+
+extension UIImage {
+    func resized(to size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
         }
     }
 }

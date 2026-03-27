@@ -15,7 +15,7 @@ Future<Map<dynamic, dynamic>> execute({
   required String userToken,
   required String encryptionKey,
   required String challengeId,
-  bool enableBiometricsPin = true,
+  bool enableBiometricsPin = false,
 }) {
   return CircleWalletPlatform.instance.execute(
     appId: appId,
