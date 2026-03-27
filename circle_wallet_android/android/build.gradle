@@ -6,16 +6,29 @@ plugins {
 group 'com.example.verygoodcore'
 version '1.0-SNAPSHOT'
 
+def circlefinProps = new Properties()
+def circlefinPropsFile = rootProject.file('circlefin-maven.properties')
+if (circlefinPropsFile.exists()) {
+    circlefinPropsFile.withReader('UTF-8') { reader -> circlefinProps.load(reader) }
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
 
+        def mavenUrl = System.getenv('PWSDK_MAVEN_URL') ?: circlefinProps.getProperty('PWSDK_MAVEN_URL')
+        if (!mavenUrl?.trim()) {
+            throw new GradleException(
+                "PWSDK_MAVEN_URL not set. Provide the PWSDK_MAVEN_URL environment variable " +
+                "or create circlefin-maven.properties next to the root build.gradle."
+            )
+        }
         maven {
-            url System.getenv('PWSDK_MAVEN_URL')
+            url mavenUrl
             credentials {
-                username System.getenv('PWSDK_MAVEN_USERNAME')
-                password System.getenv('PWSDK_MAVEN_PASSWORD')
+                username System.getenv('PWSDK_MAVEN_USERNAME') ?: circlefinProps.getProperty('PWSDK_MAVEN_USERNAME') ?: ''
+                password System.getenv('PWSDK_MAVEN_PASSWORD') ?: circlefinProps.getProperty('PWSDK_MAVEN_PASSWORD') ?: ''
             }
         }
     }
