@@ -17,6 +17,10 @@ scripts:
     description: Run flutter test in each package that has a test/ directory.
     run: dart run melos exec --concurrency=1 --dir-exists=test -- flutter test
 
+  format:
+    description: Run dart format in each package that has a lib/ directory.
+    run: dart run melos exec --dir-exists=lib -- dart format .
+
   build:apk:
     description: Release APK for the example app (circle_wallet_example).
     run: dart run melos exec --scope=circle_wallet_example -- flutter build apk

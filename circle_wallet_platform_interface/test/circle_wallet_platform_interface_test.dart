@@ -15,8 +15,9 @@ class CircleWalletMock extends CircleWalletPlatform {
     required String challengeId,
     bool enableBiometricsPin = false,
   }) {
-    // TODO: implement execute
-    throw UnimplementedError();
+    throw UnimplementedError(
+      'CircleWalletMock.execute is not used by these tests.',
+    );
   }
 }
 

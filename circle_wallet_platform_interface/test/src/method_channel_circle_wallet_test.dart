@@ -14,17 +14,17 @@ void main() {
       methodChannelCircleWallet = MethodChannelCircleWallet();
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(
-        methodChannelCircleWallet.methodChannel,
-        (methodCall) async {
-          log.add(methodCall);
-          switch (methodCall.method) {
-            case 'getPlatformName':
-              return kPlatformName;
-            default:
-              return null;
-          }
-        },
-      );
+            methodChannelCircleWallet.methodChannel,
+            (methodCall) async {
+              log.add(methodCall);
+              switch (methodCall.method) {
+                case 'getPlatformName':
+                  return kPlatformName;
+                default:
+                  return null;
+              }
+            },
+          );
     });
 
     tearDown(log.clear);
