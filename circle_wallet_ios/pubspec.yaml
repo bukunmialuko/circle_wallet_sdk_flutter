@@ -15,10 +15,10 @@ flutter:
         dartPluginClass: CircleWalletIOS
 
 dependencies:
-  flutter:
-    sdk: flutter
   circle_wallet_platform_interface:
     path: ../circle_wallet_platform_interface
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

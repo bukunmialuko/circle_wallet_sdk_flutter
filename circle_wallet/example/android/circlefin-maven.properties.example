@@ -1,0 +1,5 @@
+# Copy to circlefin-maven.properties (gitignored) or use PWSDK_MAVEN_* env vars.
+# GitHub PAT needs read:packages for circlefin/w3s-android-sdk.
+PWSDK_MAVEN_URL=https://maven.pkg.github.com/circlefin/w3s-android-sdk
+PWSDK_MAVEN_USERNAME=your_github_username
+PWSDK_MAVEN_PASSWORD=your_github_pat

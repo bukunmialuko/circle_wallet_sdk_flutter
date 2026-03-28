@@ -16,15 +16,17 @@ void main() {
 
       log = <MethodCall>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(circleWallet.methodChannel, (methodCall) async {
-        log.add(methodCall);
-        switch (methodCall.method) {
-          case 'getPlatformName':
-            return kPlatformName;
-          default:
-            return null;
-        }
-      });
+          .setMockMethodCallHandler(circleWallet.methodChannel, (
+            methodCall,
+          ) async {
+            log.add(methodCall);
+            switch (methodCall.method) {
+              case 'getPlatformName':
+                return kPlatformName;
+              default:
+                return null;
+            }
+          });
     });
 
     test('can be registered', () {

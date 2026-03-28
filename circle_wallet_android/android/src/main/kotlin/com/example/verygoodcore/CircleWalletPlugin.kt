@@ -79,15 +79,14 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Appl
         activity = null
     }
 
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         val app = applicationContext as? Application
         app?.unregisterActivityLifecycleCallbacks(this)
-        
         channel.setMethodCallHandler(null)
         eventChannel.setStreamHandler(null)
         eventSink = null
         applicationContext = null
     }
-
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
@@ -114,7 +113,7 @@ class CircleWalletPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Appl
         // hidePin, back, dropdownArrow so they are visible on the dark theme.
         WalletSdk.setViewSetterProvider(FlutterViewSetterProvider())
 
-        WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider(context))
+        WalletSdk.setLayoutProvider(FlutterWalletLayoutProvider(appCtx))
 
         // Listen for the forgotPin event and forward it via EventChannel stream.
         // Flutter subscribes to circle_wallet_android/events and filters on "forgotPin".

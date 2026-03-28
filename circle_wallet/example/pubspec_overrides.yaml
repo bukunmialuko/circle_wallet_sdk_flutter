@@ -1,0 +1,11 @@
+# melos_managed_dependency_overrides: circle_wallet,circle_wallet_android,circle_wallet_ios,circle_wallet_platform_interface,google_sign_in_ios
+dependency_overrides:
+  circle_wallet:
+    path: ..
+  circle_wallet_android:
+    path: ../../circle_wallet_android
+  circle_wallet_ios:
+    path: ../../circle_wallet_ios
+  circle_wallet_platform_interface:
+    path: ../../circle_wallet_platform_interface
+  google_sign_in_ios: 5.8.1

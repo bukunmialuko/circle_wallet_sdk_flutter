@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install workspace tooling
+        run: dart pub get
+
+      - name: Melos bootstrap
+        run: dart run melos bootstrap
+
+      - name: Analyze
+        run: dart run melos run analyze --no-select
+
+      - name: Test
+        run: dart run melos run test --no-select

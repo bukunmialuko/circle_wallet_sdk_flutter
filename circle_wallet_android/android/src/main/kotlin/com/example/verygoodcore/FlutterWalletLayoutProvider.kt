@@ -28,9 +28,14 @@ class FlutterWalletLayoutProvider(private val context: Context) : LayoutProvider
 
     /** Creates a single [IconTextConfig] with a numbered circle icon and the given text. */
     private fun makeItem(number: Int, text: String): IconTextConfig {
-        val circleDrawable = NumberedCircleDrawableHelper.make(context, number)
+        val resId = when (number) {
+            1 -> R.drawable.pw_security_confirm_num_1
+            2 -> R.drawable.pw_security_confirm_num_2
+            3 -> R.drawable.pw_security_confirm_num_3
+            else -> R.drawable.pw_security_confirm_num_1
+        }
         return IconTextConfig(
-            LocalImageSetter(circleDrawable),
+            LocalImageSetter(resId),
             TextConfig(text)
         )
     }

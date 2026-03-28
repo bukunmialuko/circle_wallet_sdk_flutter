@@ -8,15 +8,16 @@ class CircleWalletMock extends CircleWalletPlatform {
   Future<String?> getPlatformName() async => mockPlatformName;
 
   @override
-  Future<Map<dynamic, dynamic>> execute({
+  Future<Map<String, dynamic>> execute({
     required String appId,
     required String userToken,
     required String encryptionKey,
     required String challengeId,
     bool enableBiometricsPin = false,
   }) {
-    // TODO: implement execute
-    throw UnimplementedError();
+    throw UnimplementedError(
+      'CircleWalletMock.execute is not used by these tests.',
+    );
   }
 }
 
