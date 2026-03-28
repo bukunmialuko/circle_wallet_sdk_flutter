@@ -203,3 +203,4 @@ devtools_options.yaml
 /apps/superapp/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
 /circle_wallet/example/.env
 /circle_wallet/example/circlefin-maven.properties
+/circle_wallet/example/android/circlefin-maven.properties

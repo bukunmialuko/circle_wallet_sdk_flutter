@@ -1,0 +1,26 @@
+name: circle_wallet_sdk_flutter
+
+packages:
+  - circle_wallet_platform_interface
+  - circle_wallet_android
+  - circle_wallet_ios
+  - circle_wallet
+  - circle_wallet/example
+  - circle_wallet/example/actions/check_platform_name
+
+scripts:
+  analyze:
+    description: Run dart analyze in each package that has a lib/ directory.
+    run: dart run melos exec --dir-exists=lib -- dart analyze .
+
+  test:
+    description: Run flutter test in each package that has a test/ directory.
+    run: dart run melos exec --concurrency=1 --dir-exists=test -- flutter test
+
+  build:apk:
+    description: Release APK for the example app (circle_wallet_example).
+    run: dart run melos exec --scope=circle_wallet_example -- flutter build apk
+
+  build:ipa:
+    description: Release IPA for the example app (requires macOS, Xcode, signing).
+    run: dart run melos exec --scope=circle_wallet_example -- flutter build ipa --release

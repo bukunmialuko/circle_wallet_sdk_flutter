@@ -10,7 +10,7 @@ Future<String> getPlatformName() async {
 }
 
 /// Execute sdk circle action based on params.
-Future<Map<dynamic, dynamic>> execute({
+Future<Map<String, dynamic>> execute({
   required String appId,
   required String userToken,
   required String encryptionKey,

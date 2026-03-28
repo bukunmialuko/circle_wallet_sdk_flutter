@@ -371,7 +371,7 @@ class _ExecutePageState extends State<ExecutePage> {
   final _challengeIdController = TextEditingController();
 
   bool _isExecuting = false;
-  Map<dynamic, dynamic>? _result;
+  Map<String, dynamic>? _result;
 
   StreamSubscription<void>? _forgotPinSub;
 
@@ -506,7 +506,6 @@ class _ExecutePageState extends State<ExecutePage> {
         userToken: _userTokenController.text.trim(),
         encryptionKey: _encryptionKeyController.text.trim(),
         challengeId: challengeId,
-        enableBiometricsPin: false,
       );
       if (!mounted) return;
       setState(() => _result = result);
@@ -535,7 +534,6 @@ class _ExecutePageState extends State<ExecutePage> {
         userToken: _userTokenController.text.trim(),
         encryptionKey: _encryptionKeyController.text.trim(),
         challengeId: _challengeIdController.text.trim(),
-        enableBiometricsPin: false,
       );
       if (!mounted) return;
       setState(() => _result = result);

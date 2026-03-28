@@ -4,15 +4,14 @@ import 'package:flutter/services.dart';
 
 /// The Android implementation of [CircleWalletPlatform].
 class CircleWalletAndroid extends CircleWalletPlatform {
+  /// Creates the Android implementation, registering the native call handler.
+  CircleWalletAndroid() {
+    methodChannel.setMethodCallHandler(_handleNativeCall);
+  }
+
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('circle_wallet_android');
-
-  /// Creates the Android implementation, registering the native call handler.
-  CircleWalletAndroid() {
-    // Listen for native → Flutter calls initiated by the native plugin.
-    methodChannel.setMethodCallHandler(_handleNativeCall);
-  }
 
   /// Registers this class as the default instance of [CircleWalletPlatform]
   static void registerWith() {
@@ -31,6 +30,7 @@ class CircleWalletAndroid extends CircleWalletPlatform {
     switch (call.method) {
       case 'onForgotPin':
         onForgotPin?.call();
+        return null;
       default:
         throw MissingPluginException('${call.method} not implemented');
     }
@@ -42,12 +42,12 @@ class CircleWalletAndroid extends CircleWalletPlatform {
   }
 
   @override
-  Future<Map<dynamic, dynamic>> execute({
+  Future<Map<String, dynamic>> execute({
     required String appId,
     required String userToken,
     required String encryptionKey,
     required String challengeId,
-    bool enableBiometricsPin = true,
+    bool enableBiometricsPin = false,
   }) async {
     try {
       final args = <String, dynamic>{
@@ -63,7 +63,8 @@ class CircleWalletAndroid extends CircleWalletPlatform {
         args,
       );
 
-      return result ?? <dynamic, dynamic>{};
+      if (result == null) return <String, dynamic>{};
+      return result.map((key, value) => MapEntry(key.toString(), value));
     } on PlatformException catch (e) {
       throw Exception(
         'CircleWalletAndroid execute failed: ${e.code} → ${e.message}',

@@ -19,7 +19,7 @@ class CircleWalletIOS extends CircleWalletPlatform {
   }
 
   @override
-  Future<Map<dynamic, dynamic>> execute({
+  Future<Map<String, dynamic>> execute({
     required String appId,
     required String userToken,
     required String encryptionKey,
@@ -40,10 +40,11 @@ class CircleWalletIOS extends CircleWalletPlatform {
         args,
       );
 
-      return result ?? <dynamic, dynamic>{};
+      if (result == null) return <String, dynamic>{};
+      return result.map((key, value) => MapEntry(key.toString(), value));
     } on PlatformException catch (e) {
       throw Exception(
-        'CircleWalletAndroid execute failed: ${e.code} → ${e.message}',
+        'CircleWalletIOS execute failed: ${e.code} → ${e.message}',
       );
     }
   }
